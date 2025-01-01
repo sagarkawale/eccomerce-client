@@ -1,6 +1,5 @@
 {
   "name": "ecommerce-client",
-  "proxy": "https://ecommerce-server-78vu.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
