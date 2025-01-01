@@ -1,6 +1,6 @@
 {
   "name": "ecommerce-client",
-  "proxy": "http://localhost:8080",
+  "proxy": "https://ecommerce-server-hu30.onrender.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
