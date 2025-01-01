@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import AdminMenu from "../../Components/Layout/AdminMenu";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../../utils/apiRequest";
 
 const { Option } = Select; // destructre
 
@@ -22,7 +22,7 @@ const CreateProduct = () => {
   //get all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-category");
+      const { data } = await apiRequest.get("/api/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -46,7 +46,7 @@ const CreateProduct = () => {
       productData.append("photo", photo);
       productData.append("category", category);
 
-      const { data } = await axios.post(
+      const { data } = await apiRequest.post(
         "/api/product/create-product",
         productData
       );

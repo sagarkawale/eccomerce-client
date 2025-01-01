@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "../../styles/AuthStyle.css";
 import Layout from "../../Components/Layout/Layout";
+import { apiRequest } from "../../utils/apiRequest";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -17,7 +17,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/register", {
+      const res = await apiRequest.post("/api/auth/register", {
         name,
         email,
         password,

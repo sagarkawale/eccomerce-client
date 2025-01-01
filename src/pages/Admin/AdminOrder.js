@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import AdminMenu from "../../Components/Layout/AdminMenu";
 import Layout from "../../Components/Layout/Layout";
 import moment from "moment";
-import axios from "axios";
 import UserMenu from "../../Components/Layout/UserMenu";
 import { useAuth } from "../../context/Auth";
 import { Select } from "antd";
 import { Option } from "antd/es/mentions";
+import { apiRequest } from "../../utils/apiRequest";
 const { option } = Select;
 
 const AdminOrder = () => {
@@ -22,7 +22,7 @@ const AdminOrder = () => {
   const [auth, setAuth] = useAuth();
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/auth/all-orders");
+      const { data } = await apiRequest.get("/api/auth/all-orders");
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -33,9 +33,12 @@ const AdminOrder = () => {
   }, [auth?.token]);
   const handleChange = async (orderId, value) => {
     try {
-      const { data } = await axios.put(`/api/auth/order-status/${orderId}`, {
-        status: value,
-      });
+      const { data } = await apiRequest.put(
+        `/api/auth/order-status/${orderId}`,
+        {
+          status: value,
+        }
+      );
       getOrders();
     } catch (error) {
       console.log(error);

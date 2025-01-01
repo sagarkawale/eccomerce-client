@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useAuth } from "../../context/Auth";
 import moment from "moment";
 import Layout from "../../Components/Layout/Layout";
 import UserMenu from "../../Components/Layout/UserMenu";
+import { apiRequest } from "../../utils/apiRequest";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/auth/orders");
+      const { data } = await apiRequest.get("/api/auth/orders");
       setOrders(data);
     } catch (error) {
       console.log(error);

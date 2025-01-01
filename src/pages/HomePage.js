@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../Components/Prices";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import toast from "react-hot-toast";
 import "../styles/HomePage.css";
 import { AiOutlineReload } from "react-icons/ai";
 import Layout from "../Components/Layout/Layout";
+import { apiRequest } from "../utils/apiRequest";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const HomePage = () => {
   // Fetch all categories
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-category");
+      const { data } = await apiRequest.get("/api/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -40,7 +40,7 @@ const HomePage = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`api/product/product-list/${page}`);
+      const { data } = await apiRequest.get(`api/product/product-list/${page}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -71,7 +71,7 @@ const HomePage = () => {
   // Fetch total count of products
   const getTotal = async () => {
     try {
-      const { data } = await axios.get("/api/product/product-count");
+      const { data } = await apiRequest.get("/api/product/product-count");
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ const HomePage = () => {
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/product/product-list/${page}`);
+      const { data } = await apiRequest.get(`/api/product/product-list/${page}`);
       setLoading(false);
       setProducts((prev) => [...prev, ...data?.products]);
     } catch (error) {
@@ -102,7 +102,7 @@ const HomePage = () => {
   // Filter products based on selected filters (category and price)
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/api/product/product-filters", {
+      const { data } = await apiRequest.post("/api/product/product-filters", {
         checked,
         radio,
       });

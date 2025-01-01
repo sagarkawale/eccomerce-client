@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import axios from "axios";
 import toast from "react-hot-toast";
+import { apiRequest } from "../utils/apiRequest";
 
 const CheckoutForm = ({ cart, user }) => {
   const stripe = useStripe();
@@ -17,7 +17,7 @@ const CheckoutForm = ({ cart, user }) => {
 
     try {
       // Step 1: Call your backend to create a payment intent with the cart data
-      const { data } = await axios.post("/api/product/stripe/payment", {
+      const { data } = await apiRequest.post("/api/product/stripe/payment", {
         cart,
       });
       const { clientSecret } = data;
@@ -43,10 +43,13 @@ const CheckoutForm = ({ cart, user }) => {
         console.log("Payment Intent:", paymentIntent); // Log to verify it's valid
 
         // Step 3: Send order data to the backend
-        const orderResponse = await axios.post("/api/product/create-order", {
-          cart,
-          paymentIntent,
-        });
+        const orderResponse = await apiRequest.post(
+          "/api/product/create-order",
+          {
+            cart,
+            paymentIntent,
+          }
+        );
 
         if (orderResponse.data.success) {
           toast.success("Payment and order successful!", { duration: 8000 });

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Navigate, useParams } from "react-router-dom";
 import "../styles/ProductDetailStyle.css";
 import Layout from "./../Components/Layout/Layout";
+import { apiRequest } from "../utils/apiRequest";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -22,7 +22,7 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       setLoading(true); // Start loading
-      const { data } = await axios.get(
+      const { data } = await apiRequest.get(
         `/api/product/get-product/${params.slug}`
       );
       setProduct(data?.product);
@@ -42,7 +42,7 @@ const ProductDetails = () => {
   // Fetch similar products based on category and product ID
   const getSimilarProduct = async (pid, cid) => {
     try {
-      const { data } = await axios.get(
+      const { data } = await apiRequest.get(
         `/api/product/related-product/${pid}/${cid}`
       );
       console.log("Received Related Products Data:", data);

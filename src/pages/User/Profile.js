@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../../context/Auth";
 import Layout from "../../Components/Layout/Layout";
 import UserMenu from "../../Components/Layout/UserMenu";
+import { apiRequest } from "../../utils/apiRequest";
 
 const Profile = () => {
   //context destructre karaiche
@@ -29,7 +29,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("/api/auth/profile", {
+      const { data } = await apiRequest.put("/api/auth/profile", {
         name,
         email,
         password,
